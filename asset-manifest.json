@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/calender-event-react/static/css/main.2b51f65d.css",
+    "main.js": "/calender-event-react/static/js/main.82f49ca6.js",
+    "index.html": "/calender-event-react/index.html",
+    "main.2b51f65d.css.map": "/calender-event-react/static/css/main.2b51f65d.css.map",
+    "main.82f49ca6.js.map": "/calender-event-react/static/js/main.82f49ca6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2b51f65d.css",
+    "static/js/main.82f49ca6.js"
+  ]
+}
