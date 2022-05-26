@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import { getWeek } from "./util";
+import Header from "./components/Header";
+import Week from './components/Week';
+import Timeslots from "./components/Timeslots";
+import classes from './App.module.css';
 function App() {
+  const [week, setWeek] = useState(() => { return getWeek() })
+  const [events, setEvents] = useState([]);
+
+  const setEventsHandler = (timestamp, title, description) => {
+    setEvents((events) => {
+      let eventsArray = events.filter((event) => {
+        return event.timestamp !== timestamp
+      })
+      eventsArray.push({ timestamp, title, description })
+      return eventsArray
+    })
+  }
+
+  const deleteEventHandler = (tmstmp) => {
+    setEvents((events) => {
+      let eventsArray = events.filter((event) => {
+        return event.timestamp !== tmstmp
+      })
+      return eventsArray;
+    })
+  }
+
+  const prevButtonHandler = () => {
+    setWeek((week) => {
+      return getWeek(new Date(week[0].getTime() - 7 * 1000 * 60 * 60 * 24));
+    })
+  }
+  const nextButtonHandler = () => {
+    setWeek((week) => {
+      return getWeek(new Date(week[6].getTime() + 1000 * 60 * 60 * 24));
+    })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>
+        <Header prevButtonHandler={prevButtonHandler} nextButtonHandler={nextButtonHandler} currentDay={week[0]} />
+      </div>
+
+      <div className={classes.calenderContainer}>
+        <Week currentWeek={week} />
+        <Timeslots currentWeek={week} eventsHandler={setEventsHandler} deleteEventHandler={deleteEventHandler} events={events} />
+      </div>
+    </>
   );
 }
 
